@@ -1,0 +1,35 @@
+{
+  "name": "ghoul-kp",
+  "version": "1.0.0",
+  "description": "Printable character sheet generator for a LARP project.",
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "^1.5.8",
+    "autoprefixer": "^6.5.3",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jshint": "^2.9.4",
+    "live-reload": "^1.1.0",
+    "parallelshell": "^2.0.0",
+    "postcss": "^5.2.5",
+    "postcss-cli": "^2.6.0",
+    "watchify": "^3.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NukeTheMoon/ghoul-kp.git"
+  },
+  "scripts": {
+    "css": "node node_modules/node-sass/bin/node-sass -r --output-style compressed scss/main.scss -o dist",
+    "css:watch": "npm run css -- -w",
+    "postcss": "postcss --use autoprefixer dist/main.css -d dist/",
+    "postcss:watch": "npm run postcss -- -w",
+    "watchall": "parallelshell \"npm run css:watch\" \"npm run postcss:watch\"",
+    "lint": "node node_modules/jshint/bin/jshint js"
+  },
+  "author": "Bartosz Jedrasik",
+  "bugs": {
+    "url": "https://github.com/NukeTheMoon/ghoul-kp/issues"
+  },
+  "homepage": "https://github.com/NukeTheMoon/ghoul-kp#readme"
+}

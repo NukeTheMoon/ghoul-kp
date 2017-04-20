@@ -1,0 +1,282 @@
+@import 'reset';
+@import '../node_modules/font-awesome/scss/font-awesome.scss';
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+$shadowColor: rgba(#a877b2, 0.31);
+$timelineFrameColor: #122244;
+$timelineBarUpperColor: #75d8ff;
+$timelineBarLowerColor: #2f5a7e;
+$selectedUpperColor: #73d2ab;
+$selectedLowerColor: #56b08b;
+$tooltipBorderColor: #73d2ab;
+$fontColor: #122244;
+
+$timelineFrameHeight: 19px;
+$circleBackgroundSide: 37px;
+
+@mixin center-container() {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin center-vertical-container() {
+	display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@mixin center-content() {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin bevel() {
+	box-shadow: inset 0px 1px 1px 0px rgba(255,255,255,0.45);
+}
+
+@mixin vertical-gradient($lowerColor, $lowerPoint, $upperColor, $upperPoint) {
+	background: $upperColor;
+  background: -moz-linear-gradient(top, $upperColor $upperPoint, $lowerColor $lowerPoint);
+  background: -webkit-linear-gradient(top, $upperColor $upperPoint, $lowerColor $lowerPoint);
+  background: linear-gradient(to bottom, $upperColor $upperPoint, $lowerColor $lowerPoint);
+  filter: progid:DXImageTransform.Microsoft.gradient(
+  startColorstr=quote($upperColor), endColorstr=quote($lowerColor),
+  GradientType=0 );
+
+	@include bevel;
+}
+
+@mixin bar-gradient($lowerColor, $upperColor) {
+	@include vertical-gradient($lowerColor, 100%, $upperColor, 0%);
+}
+
+@mixin circle-gradient($lowerColor, $upperColor) {
+	@include vertical-gradient($lowerColor, 100%, $upperColor, 11%);
+}
+
+@mixin bar-gradient-blue() {
+	@include bar-gradient($timelineBarLowerColor, $timelineBarUpperColor);
+}
+
+@mixin circle-gradient-blue() {
+	@include circle-gradient($timelineBarLowerColor, $timelineBarUpperColor);
+}
+
+@mixin circle-gradient-selected() {
+	@include circle-gradient($selectedLowerColor, $selectedUpperColor);
+}
+
+@mixin circle($side) {
+	height: $side;
+	width: $side;
+	border-radius: ceil($side / 2);
+}
+
+span {
+	font-family: 'Open Sans', sans-serif;
+	text-align: center;
+	color: $fontColor;
+	font-size: 10pt;
+	text-transform: uppercase;
+}
+
+.main-container {
+  @include center-container;
+}
+
+.timeline-container {
+  @include center-content;
+  display: flex;
+  width: 85%;
+}
+
+.timeline-shadow {
+	@include center-content;
+	position: absolute;
+	background: none;
+	width: 90%;
+	height: $timelineFrameHeight;
+	z-index: -1;
+	box-shadow: 0px -5px 64px 15px $shadowColor;
+}
+
+.timeline-frame {
+	@include center-vertical-container;
+  height: $timelineFrameHeight;
+	border-radius: 5px;
+	width: 100%;
+  background-color: $timelineFrameColor;
+}
+
+.timeline-bar {
+	@include bar-gradient-blue;
+	@include center-container;
+	border-radius: 5px;
+	height: 11px;
+	margin: 0 4px 0 4px;
+	z-index: 1;
+	position: absolute;
+}
+
+.invisible-bar {
+	@include center-container;
+	justify-content: flex-end !important;
+	height: 11px;
+	margin: 0 4px 0 4px;
+	position: absolute;
+}
+
+.event-circle-background {
+	@include circle($circleBackgroundSide);
+	@include center-container;
+	position: absolute;
+	transform: translateX(50%);
+	background: $timelineFrameColor;
+	z-index: 2;
+}
+
+.event-circle-background:hover {
+	cursor: pointer;
+	.arrow-box-container {
+		display: flex;
+	}
+	.event-circle {
+		@include circle-gradient-selected;
+		.event-icon {
+			color: white;
+		}
+	}
+}
+
+.event-circle-background.disabled {
+	.event-circle {
+		background: none;
+		box-shadow: none;
+		.event-icon {
+			color: white;
+		}
+	}
+}
+
+.event-circle-background.disabled:hover {
+	cursor: pointer;
+	.arrow-box-container {
+		display: flex;
+	}
+	.event-circle {
+		@include circle-gradient-selected;
+		@include bevel;
+	}
+}
+
+.event-circle {
+	@include circle(29px);
+	@include center-container;
+	@include circle-gradient-blue;
+}
+
+.event-icon {
+	color: $timelineFrameColor;
+	font-size: 16px;
+}
+
+.arrow-box-container {
+	display: none;
+	position: absolute;
+	bottom: 44px;
+	width: 130px;
+}
+
+.arrow-box {
+	position: relative;
+	background: #ffffff;
+	border: 1px solid $tooltipBorderColor;
+}
+
+.arrow-box:after, .arrow-box:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow-box:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-top-color: #ffffff;
+	border-width: 5px;
+	margin-left: -5px;
+}
+
+.arrow-box:before {
+	border-color: rgba(115, 210, 171, 0);
+	border-top-color: $tooltipBorderColor;
+	border-width: 6px;
+	margin-left: -6px;
+}
+
+.tooltip-date-container {
+	display: flex;
+	justify-content: center;
+	border-bottom: 1px solid $tooltipBorderColor;
+}
+
+.tooltip-date {
+	display: flex;
+	padding: 10px;
+	font-weight: 800;
+}
+
+.tooltip-description {
+	display:flex;
+	padding: 10px;
+}
+
+.mobile-container {
+	padding: 32px 16px 0 16px;
+	right: 16px;
+	width: 100%;
+}
+
+.event-item {
+	display: flex;
+	justify-content: flex-start;
+	margin-bottom: 14px;
+	min-height: $circleBackgroundSide;
+}
+
+.event-circle-background.mobile {
+	transform: translateX(0);
+}
+
+.info-container {
+	$spaceBetween: 12px;
+	margin-left: $circleBackgroundSide + $spaceBetween;
+	display: flex;
+	flex-direction: column;
+	align-content: stretch;
+	justify-content: flex-start;
+}
+
+.date-container.mobile {
+	@include center-vertical-container;
+}
+
+.description-container.mobile {
+	@include center-vertical-container;
+}
+
+span.mobile{
+	padding: 0;
+	text-align: start;
+}
+
+.tooltip-date.mobile {
+	font-size: 14px;
+}
