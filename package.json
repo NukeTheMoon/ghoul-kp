@@ -20,9 +20,9 @@
     "url": "git+https://github.com/NukeTheMoon/ghoul-kp.git"
   },
   "scripts": {
-    "css": "node node_modules/node-sass/bin/node-sass -r --output-style compressed scss/main.scss -o dist",
+    "css": "node node_modules/node-sass/bin/node-sass -r --output-style compressed scss/main.scss dist/main.css",
     "css:watch": "npm run css -- -w",
-    "postcss": "postcss --use autoprefixer dist/main.css -d dist/",
+    "postcss": "postcss --use autoprefixer dist/main.css -d dist/main.css",
     "postcss:watch": "npm run postcss -- -w",
     "watchall": "parallelshell \"npm run css:watch\" \"npm run postcss:watch\"",
     "lint": "node node_modules/jshint/bin/jshint js"
