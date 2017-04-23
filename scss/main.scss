@@ -1,13 +1,82 @@
+@media screen, print {
+
 @import 'reset';
 @import 'fonts';
 @import '../node_modules/font-awesome/scss/font-awesome.scss';
-@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+$blood: #C12A2E;
+$text: #222;
 
 body {
-	font-family: 'open-sans';
+	-webkit-print-color-adjust: exact;
+	font-family: 'open_sans';
+	padding: 0 10px;
+	color: $text;
 }
 
+.sheet {
+	page-break-after: always;
 
-h1 {
-    font-family: 'aleo';
+	& > div {
+		margin-bottom: 25px;
+	}
+}
+
+.center {
+	display: flex;
+	justify-content: center;
+}
+
+.sk-logo {
+	max-height: 90px;
+	}
+
+.row {
+	display: flex;
+	justify-content: space-between;
+
+	& div:not(:last-child) {
+		margin-right: 20px;
+	}
+}
+
+.wire-box {
+	width: 100%;
+	border: 2px solid $blood;
+	border-radius: 10px;
+	position: relative;
+
+	h2 {
+		font-family: 'aleo';
+		color: $blood !important;
+		background-color: white !important;
+		font-size: 16px;
+		display: block;
+		padding: 2px 20px;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	p, pre {
+		padding: 15px;
+		font-size: 12px;
+		letter-spacing: 1px;
+	}
+
+	pre {
+		white-space: pre-line;
+		line-height: 1.1;
+	}
+}
+
+b {
+	font-weight: 600;
+}
+
+em {
+	font-style: italic;
+}
+
 }
